@@ -1,0 +1,4 @@
+modelRouting:
+  planning:
+    primary: claude-opus
+    # missing fallback and other required task types

@@ -1,0 +1,57 @@
+modelRouting:
+  planning:
+    primary: claude-opus
+    fallback: gemini-pro
+  implementation:
+    primary: claude-sonnet
+    fallback: claude-haiku
+  review:
+    primary: gemini-pro
+    fallback: claude-sonnet
+  quick-fix:
+    primary: claude-haiku
+    fallback: claude-sonnet
+
+councilTiers:
+  grill-me:
+    tier: council-worthy
+    costMultiplier: 4
+  prd-review:
+    tier: council-worthy
+    costMultiplier: 4
+  architecture:
+    tier: council-worthy
+    costMultiplier: 5
+  code-review:
+    tier: council-worthy
+    costMultiplier: 3
+  todos:
+    tier: single-agent-sufficient
+    costMultiplier: 1
+  quick-commits:
+    tier: single-agent-sufficient
+    costMultiplier: 1
+  bug-fixes:
+    tier: single-agent-sufficient
+    costMultiplier: 1
+  implementation:
+    tier: single-agent-sufficient
+    costMultiplier: 1
+
+tournamentSizes:
+  full: 3
+  pair: 2
+  solo: 1
+  turnsPerAgent: 3
+
+notifications:
+  terminalBell: true
+
+stopHook:
+  enabled: true
+  autoCommit: true
+  autoFix: true
+
+validationThresholds:
+  maxLineLength: 120
+  maxCyclomaticComplexity: 10
