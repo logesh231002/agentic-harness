@@ -11,6 +11,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from src.config.schema import ConfigError, load_config
+from src.modules.validation.auto_commit import AutoCommitError, auto_commit
 
 _ENV_GUARD = "STOP_HOOK_ACTIVE"
 _CONFIG_FILENAME = "harness.config.yaml"
@@ -87,6 +88,15 @@ def _run_pipeline(project_root: Path) -> int:
     all_passed = all(s.passed for s in steps)
     if all_passed:
         print("Stop hook: all steps passed ✓")
+        if config.stop_hook.auto_commit:
+            try:
+                result = auto_commit(project_root)
+                if result.committed:
+                    print(f"Auto-commit: {result.message.splitlines()[0]}")
+                else:
+                    print(f"Auto-commit: {result.message}")
+            except AutoCommitError as exc:
+                print(f"Auto-commit warning: {exc}", file=sys.stderr)
         return 0
 
     report = {
